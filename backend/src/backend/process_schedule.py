@@ -2,6 +2,8 @@ from google import genai
 from dotenv import load_dotenv
 from PIL import Image
 import os
+import json
+from fastapi import HTTPException
 
 load_dotenv()
 
@@ -38,9 +40,22 @@ prompt = """
         Preserve the times exactly as written in the image.
 """
 
-response = client.models.generate_content(
+def analyze_schedule():
+  response = client.models.generate_content(
     model="gemini-3.5-flash-lite",
     contents=[img, prompt],
-)
+  )
 
-print(response.text)
+  raw_text = response.text
+  print(raw_text)
+
+  raw_text = response.text.strip()
+
+  if raw_text.startswith("```json"):
+      raw_text = raw_text[7:]
+  if raw_text.endswith("```"):
+      raw_text = raw_text[:-3]
+
+  print("\n", raw_text)
+  return raw_text.strip()
+
