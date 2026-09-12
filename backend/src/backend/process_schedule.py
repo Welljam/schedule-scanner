@@ -3,15 +3,11 @@ from dotenv import load_dotenv
 from PIL import Image
 import os
 import json
-from fastapi import HTTPException
+import io
 
 load_dotenv()
 
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
-
-image_path = "schedule.png"
-img = Image.open(image_path)
-
 
 prompt = """
         Analyze this schedule image.
@@ -40,7 +36,9 @@ prompt = """
         Preserve the times exactly as written in the image.
 """
 
-def analyze_schedule():
+def analyze_schedule(image_bytes):
+  img = Image.open(io.BytesIO(image_bytes))
+
   response = client.models.generate_content(
     model="gemini-3.5-flash-lite",
     contents=[img, prompt],

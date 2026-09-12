@@ -10,7 +10,9 @@ export class ScheduleApi {
   http = inject(HttpClient);
   private baseUrl = 'http://localhost:8000';
 
-  createSchedule(): Observable<ScheduleResponse>{
-    return this.http.post<ScheduleResponse>(`${this.baseUrl}/schedule`, {});
-  };
+  uploadSchedule(file: File): Observable<ScheduleResponse> {
+    const form = new FormData();
+    form.append('file', file);
+    return this.http.post<ScheduleResponse>(`${this.baseUrl}/schedule`, form);
+  }
 }

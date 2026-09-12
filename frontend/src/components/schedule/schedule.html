@@ -1,5 +1,8 @@
-@if(schedule()){
-    
-}
-
-
+<p>choose a person's schedule</p>
+<mat-form-field>
+    <mat-select>
+        @for (p of data().people; track p.row) {
+            <mat-option [value]="p.name">{{ p.name }}</mat-option> 
+        }
+    </mat-select>
+</mat-form-field>

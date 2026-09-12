@@ -1,22 +1,16 @@
-import { Component, inject, signal } from '@angular/core';
-import { ScheduleApi } from '../../services/schedule-api';
+import { Component, inject, signal, input } from '@angular/core';
 import { ScheduleResponse } from '../../models/schedule-model';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-schedule',
-  imports: [],
+  imports: [ MatSelectModule ],
   templateUrl: './schedule.html',
   styleUrl: './schedule.scss',
 })
 export class Schedule {
-  private api = inject(ScheduleApi);
-  schedule = signal<ScheduleResponse | null>(null);
+  data = input.required<ScheduleResponse>();
 
-  load(){
-    this.api.createSchedule().subscribe({
-      next: (data) => this.schedule.set(data),
-      error: (err) => console.error(err),
-    })
-  }
+
 
 }

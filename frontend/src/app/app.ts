@@ -3,9 +3,9 @@ import { Upload } from '../components/upload/upload';
 
 @Component({
   selector: 'app-root',
-  imports: [Upload],
+  imports: [ Upload ],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
 })
 export class App {
   protected readonly title = signal('frontend');

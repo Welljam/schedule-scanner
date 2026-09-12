@@ -1,0 +1,46 @@
+.upload-btn {
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+}
+
+.upload-box{
+    display: flex;
+}
+
+.submit-btn{
+    display: flex;
+    margin: 0 14px;
+    border: 1px solid black;
+    border-radius: 4px;
+    font-size: 10px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.file-name{
+    border-radius: 4px;
+    align-items: center;
+    justify-content: center;
+}
+
+.submit-file{
+    display: flex;
+    
+    border-radius: 4px;
+    padding: 5px 14px;
+    background: #2563eb;
+
+    button{
+        background-color: #2563eb;
+        border: #2563eb;
+        color: white;
+    }
+    
+    mat-icon{
+        color: white;
+    }
+}

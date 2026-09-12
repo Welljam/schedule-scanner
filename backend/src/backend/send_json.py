@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import ValidationError
 from .process_schedule import analyze_schedule
@@ -14,12 +14,14 @@ app.add_middleware(
 )
 
 @app.post("/schedule", response_model=ScheduleResponse)
-def create_schedule():
-    raw_text = analyze_schedule()
+async def create_schedule(file: UploadFile = File(...)):
+    contents = await file.read()
+    raw_text = analyze_schedule(contents)
 
     try:
         schedule = ScheduleResponse.model_validate_json(raw_text) 
     except ValidationError:
         raise HTTPException(status_code=500, detail="Failed to parse model output into JSON")
+    
     return schedule
 
