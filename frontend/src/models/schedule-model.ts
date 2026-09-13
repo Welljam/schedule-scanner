@@ -14,3 +14,14 @@ export interface ScheduleResponse {
     people: Person[];
 }
 
+export interface Days {
+    day: string; 
+    start: string; 
+    end: string;
+}
+
+export interface CreateEventsRequest {
+  name: string;
+  week: string;
+  days: Days[];
+}

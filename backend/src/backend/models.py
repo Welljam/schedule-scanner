@@ -13,3 +13,13 @@ class Person(BaseModel):
 
 class ScheduleResponse(BaseModel):
     people: list[Person]
+
+class DayShift(BaseModel):
+    day: str
+    start: str
+    end: str
+
+class CreateEventsRequest(BaseModel):
+    name: str
+    week: str
+    days: list[DayShift]

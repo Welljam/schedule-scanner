@@ -25,7 +25,6 @@ export class Upload {
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     this.selectedFile = input.files?.[0] ?? null;
-    this.fileSelected = true;
     this.fileName = this.selectedFile?.name ?? '';
     this.fileSelected = !!this.selectedFile;
   }
@@ -35,7 +34,7 @@ export class Upload {
     this.loading = true;
     this.api.uploadSchedule(this.selectedFile).subscribe({
       next: (data) => {this.schedule.set(data); this.loading = false;},
-      error: (err) => console.error(err),
+      error: (err) => { console.error(err); this.loading = false; },
     });
   }
 }

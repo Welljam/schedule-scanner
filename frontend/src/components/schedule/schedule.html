@@ -9,20 +9,28 @@
     </mat-form-field>
 
     @if (selectedPerson()) {
+        <label class="week-pick">
+            <input #w type="week" [value]="week()" (input)="week.set(w.value)" />
+        </label>
+
         <div class="week-list">
         @for (s of shifts(); track s.day; let i = $index) {
             <div class="day-row">
-            <span class="day-label">{{ s.day }}</span>
-            <input type="time" [value]="s.start" (input)="updateTime(i, 'start', startEl.value)" #startEl />
-            <span>-</span>
-            <input type="time" [value]="s.end"   (input)="updateTime(i, 'end',   endEl.value)"   #endEl />
+                <span class="day-label">{{ s.day }}</span>
+                <input type="time" [value]="s.start" (input)="updateTime(i, 'start', startEl.value)" #startEl />
+                <span>-</span>
+                <input type="time" [value]="s.end" (input)="updateTime(i, 'end', endEl.value)" #endEl />
             </div>
         }
         </div>
     
         <div class="google-box">
-        <p class="google-text">send to google calendar</p>
-        <button class="google-btn">Send</button>
+            <p class="google-text">send to google calendar</p>
+            <button class="google-btn" (click)="sendSchedule()">Send</button>
         </div>
+    }
+
+    @if(sent()){
+        <p>Added to Google Calendar</p>
     }
 </div>

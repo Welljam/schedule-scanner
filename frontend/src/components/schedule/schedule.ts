@@ -1,24 +1,23 @@
-import { Component, signal, input } from '@angular/core';
-import { ScheduleResponse, Person } from '../../models/schedule-model';
+import { Component, signal, input, inject} from '@angular/core';
+import { ScheduleResponse, Person, CreateEventsRequest, Days} from '../../models/schedule-model';
 import { MatSelectModule } from '@angular/material/select';
-import { MatTableModule } from '@angular/material/table';
-
-type Shift = { day: string; start: string; end: string };
+import { ScheduleApi } from '../../services/schedule-api';
 
 @Component({
   selector: 'app-schedule',
-  imports: [ MatSelectModule, MatTableModule ],
+  imports: [ MatSelectModule ],
   templateUrl: './schedule.html',
   styleUrl: './schedule.scss',
 })
 export class Schedule {
   data = input.required<ScheduleResponse>();
-
+  private api = inject(ScheduleApi);
   selectedPerson = signal<Person | null>(null);
-  shifts = signal<Shift[]>([]);
+  shifts = signal<Days[]>([]);
   week = signal(nextIsoWeek());
+  sent = signal<boolean>(false);
 
-  private days = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'] as const;
+  private days = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'] as const;  
 
   selectPerson(person: Person) {
     this.selectedPerson.set(person);
@@ -34,6 +33,29 @@ export class Schedule {
     const updated = [...this.shifts()];
     updated[i] = { ...updated[i], [field]: value };
     this.shifts.set(updated);
+  }
+
+  sendSchedule(){
+    const person = this.selectedPerson();
+    if (!person) return;
+    
+    const createEvent: CreateEventsRequest = {
+      name: person.name ?? 'Schedule',
+      week: this.week(),
+      days: this.shifts().filter(s => s.start && s.end),
+    };
+
+    this.api.create_event(createEvent).subscribe({
+      next: () => this.sent.set(true),
+      error: (err) => {
+        if (err.status === 401) {
+          window.location.href = 'http://localhost:8000/login';
+        } else {
+          console.error(err);
+        }
+      },
+    })
+
   }
 }
 
@@ -53,11 +75,4 @@ function isoWeek(date: Date): { year: number; week: number } {
     ((d.getTime() - firstThursday.getTime()) / 86400000 - 3 + ((firstThursday.getUTCDay() + 6) % 7)) / 7
   );
   return { year: d.getUTCFullYear(), week };
-}
-
-function toTime(raw: string | undefined): string {
-  if (!raw) return '';
-  const m = raw.trim().replace('.', ':').match(/^(\d{1,2}):(\d{1,2})$/);
-  if (!m) return '';
-  return `${m[1].padStart(2, '0')}:${m[2].padStart(2, '0')}`;
 }
