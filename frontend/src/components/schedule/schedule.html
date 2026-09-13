@@ -1,8 +1,28 @@
-<p>choose a person's schedule</p>
-<mat-form-field>
-    <mat-select>
-        @for (p of data().people; track p.row) {
-            <mat-option [value]="p.name">{{ p.name }}</mat-option> 
+<div class="schedule-box">
+    <p>choose a person's schedule</p>
+    <mat-form-field>
+        <mat-select (selectionChange)="selectPerson($event.value)">
+            @for (p of data().people; track p.row) {
+                <mat-option [value]="p">{{ p.name }}</mat-option> 
+            }
+        </mat-select>
+    </mat-form-field>
+
+    @if (selectedPerson()) {
+        <div class="week-list">
+        @for (s of shifts(); track s.day; let i = $index) {
+            <div class="day-row">
+            <span class="day-label">{{ s.day }}</span>
+            <input type="time" [value]="s.start" (input)="updateTime(i, 'start', startEl.value)" #startEl />
+            <span>-</span>
+            <input type="time" [value]="s.end"   (input)="updateTime(i, 'end',   endEl.value)"   #endEl />
+            </div>
         }
-    </mat-select>
-</mat-form-field>
+        </div>
+    
+        <div class="google-box">
+        <p class="google-text">send to google calendar</p>
+        <button class="google-btn">Send</button>
+        </div>
+    }
+</div>

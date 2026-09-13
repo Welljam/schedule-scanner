@@ -1,0 +1,62 @@
+.schedule-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+.week-pick{
+    margin: 40px 0 5px 0;
+}
+
+.google-box{
+    margin-top: 60px;
+}
+
+.google-text{
+    margin: 0;
+}
+
+.google-btn{
+    margin-top: 10px;
+    padding: 10px 50px;
+}
+
+.week-list { 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 8px; 
+    margin: 12px 70px 0 0;
+}
+
+.day-row { 
+    display: flex; 
+    align-items: 
+    center; 
+    gap: 8px; 
+}
+
+.day-label { 
+    width: 90px; 
+    text-align: right;
+}
+
+
+input[type="week"], input[type="time"] {
+  font: inherit;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+}
+input[type="week"]:focus, input[type="time"]:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+input[type="week"]::-webkit-calendar-picker-indicator { opacity: 0.6; cursor: pointer; }
+input[type="week"]::-webkit-calendar-picker-indicator:hover { opacity: 1; }

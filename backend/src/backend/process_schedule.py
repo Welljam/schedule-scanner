@@ -12,9 +12,9 @@ client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 prompt = """
         Analyze this schedule image.
 
-        Extract every person/row and their working hours for Monday through Sunday.
+        Extract every person (row) and their working hours for Monday through Sunday.
 
-        Return ONLY JSON in this format:
+        Return ONLY valid JSON in exactly this shape:
 
         {
           "people": [
@@ -32,8 +32,17 @@ prompt = """
           ]
         }
 
-        Use null when a cell is empty.
-        Preserve the times exactly as written in the image.
+        Rules for each day's value:
+        - If the cell is a work shift, output it as a single string "HH:MM-HH:MM".
+        - Use 24-hour time, zero-padded to two digits, a colon between hours and
+          minutes, and a single hyphen between start and end. No spaces, no newlines.
+          Examples: "7.00" above "16.00" becomes "07:00-16:00";
+          "14:15" above "19:10" becomes "14:15-19:10".
+        - Use null for anything that is not a work shift: an empty cell, or non-time
+          text such as "ej anställd", "sjuk", "ledig", or "semester".
+        - Do not invent times. Only use what is shown in the image.
+
+        Return only the JSON, with no markdown fences or commentary.
 """
 
 def analyze_schedule(image_bytes):
