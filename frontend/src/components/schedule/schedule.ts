@@ -2,10 +2,11 @@ import { Component, signal, input, inject} from '@angular/core';
 import { ScheduleResponse, Person, CreateEventsRequest, Days} from '../../models/schedule-model';
 import { MatSelectModule } from '@angular/material/select';
 import { ScheduleApi } from '../../services/schedule-api';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-schedule',
-  imports: [ MatSelectModule ],
+  imports: [ MatSelectModule, MatIconModule ],
   templateUrl: './schedule.html',
   styleUrl: './schedule.scss',
 })

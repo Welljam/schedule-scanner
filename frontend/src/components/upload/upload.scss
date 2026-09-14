@@ -47,15 +47,10 @@
   border-radius: 8px;
   padding: 8px 18px;
   background: #2563eb;
+  color: white;
+  border: none;
+  font: inherit;
   cursor: pointer;
-
-  button {
-    background: transparent;
-    border: none;
-    color: white;
-    font: inherit;
-    cursor: pointer;
-  }
 
   mat-icon {
     color: white;

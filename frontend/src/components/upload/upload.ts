@@ -6,7 +6,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { Schedule } from '../schedule/schedule';
 import { MatIconModule } from '@angular/material/icon';
 
-
 @Component({
   selector: 'app-upload',
   imports: [ MatProgressSpinnerModule, MatSelectModule, Schedule, MatIconModule],

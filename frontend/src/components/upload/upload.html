@@ -12,10 +12,10 @@
         @if (fileSelected) {
             <div class="submit-btn">
                 <div #file class="file-name">{{ fileName }}</div>
-                <div class="submit-file">
+                <button class="submit-file" (click)="submit()">
                     <mat-icon>cloud_upload</mat-icon>
-                    <button style="cursor: pointer;" (click)="submit()">Scan</button>
-                </div>
+                    Scan
+                </button>
             </div>
         }
   </div>

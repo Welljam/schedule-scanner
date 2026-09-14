@@ -5,8 +5,11 @@
     flex-direction: column;
 }
 
-
 .google-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     margin-top: 60px;
 }
 
@@ -17,7 +20,16 @@
 .google-btn{
     margin-top: 10px;
     padding: 10px 50px;
+    border-radius: 8px;
+    background: #2563eb;
+    border: 1px solid #2563eb;
+    color: white;
+    cursor: pointer;
 }
+.google-btn:hover {
+  background: #1d4ed8;
+}
+
 
 .week-list { 
     display: flex;
@@ -55,3 +67,9 @@ input[type="week"]:focus, input[type="time"]:focus {
 }
 input[type="week"]::-webkit-calendar-picker-indicator { opacity: 0.6; cursor: pointer; }
 input[type="week"]::-webkit-calendar-picker-indicator:hover { opacity: 1; }
+
+.added{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
