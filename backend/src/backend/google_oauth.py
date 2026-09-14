@@ -9,12 +9,15 @@ import os
 load_dotenv()
 
 router = APIRouter()
-os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
+
+IS_PROD = os.getenv("ENV") == "production"
+if not IS_PROD:
+    os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
 CLIENT_ID = os.getenv("CLIENT_ID")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET")
-REDIRECT_URI = "http://localhost:8000/callback"
-FRONTEND_URL = "http://localhost:4200"
+REDIRECT_URI = os.getenv("REDIRECT_URI", "http://localhost:8000/callback")
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:4200")
 SCOPES = ["https://www.googleapis.com/auth/calendar.events"]
 
 
@@ -48,6 +51,7 @@ def login():
         value=flow.code_verifier,
         httponly=True,
         samesite="lax",
+        secure=IS_PROD,
     )
     return response
 
@@ -72,6 +76,7 @@ def auth_callback(code: str, request: Request):
         value=dumps(token_data),
         httponly=True,
         samesite="lax",
+        secure=IS_PROD,
     )
     response.delete_cookie("code_verifier")
     return response
