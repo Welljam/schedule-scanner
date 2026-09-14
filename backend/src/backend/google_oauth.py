@@ -10,6 +10,8 @@ load_dotenv()
 
 router = APIRouter()
 
+os.environ["OAUTHLIB_RELAX_TOKEN_SCOPE"] = "1"
+
 IS_PROD = os.getenv("ENV") == "production"
 if not IS_PROD:
     os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
