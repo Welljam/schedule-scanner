@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://schedule-scanner-backend.vercel.app//:path*"
+      "destination": "https://schedule-scanner-backend.vercel.app/:path*"
     }
   ]
 }
