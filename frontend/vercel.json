@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://schedule-scanner-backend-william-b95a.vercel.app/:path*"
+    }
+  ]
+}
