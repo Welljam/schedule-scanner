@@ -8,7 +8,7 @@ import { ScheduleResponse, CreateEventsRequest } from '../models/schedule-model'
 })
 export class ScheduleApi {
   http = inject(HttpClient);
-  private baseUrl = 'http://localhost:8000';
+  private baseUrl = 'schedule-scanner-backend-4n3k2qh9m-william-b95a.vercel.app';
 
   uploadSchedule(file: File): Observable<ScheduleResponse> {
     const form = new FormData();
