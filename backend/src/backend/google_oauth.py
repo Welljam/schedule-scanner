@@ -3,7 +3,7 @@ from google.oauth2.credentials import Credentials
 from dotenv import load_dotenv
 from fastapi import APIRouter, Request
 from fastapi.responses import RedirectResponse
-from json import loads
+from json import loads, dumps
 import os
 
 load_dotenv()
@@ -59,10 +59,17 @@ def auth_callback(code: str, request: Request):
     flow.fetch_token(code=code)
     creds = flow.credentials
 
+    token_data = {
+        "token": creds.token,
+        "refresh_token": creds.refresh_token,
+        "token_uri": creds.token_uri,
+        "scopes": creds.scopes,
+    }
+
     response = RedirectResponse(url=FRONTEND_URL)
     response.set_cookie(
         key="google_tokens",
-        value=creds.to_json(),
+        value=dumps(token_data),
         httponly=True,
         samesite="lax",
     )
@@ -73,4 +80,12 @@ def auth_callback(code: str, request: Request):
 def load_credentials(cookie_value: str | None) -> Credentials | None:
     if not cookie_value:
         return None
-    return Credentials.from_authorized_user_info(loads(cookie_value), SCOPES)
+    data = loads(cookie_value)
+    return Credentials(
+        token=data["token"],
+        refresh_token=data.get("refresh_token"),
+        token_uri=data["token_uri"],
+        client_id=CLIENT_ID,
+        client_secret=CLIENT_SECRET,
+        scopes=data.get("scopes"),
+    )

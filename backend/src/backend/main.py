@@ -18,12 +18,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+MAX_UPLOAD_BYTES = 10 * 1024 * 1024
+
 @app.get("/favicon.ico")
 def favicon():
     return Response(status_code=204)
 
 @app.post("/schedule", response_model=ScheduleResponse)
 async def create_schedule(file: UploadFile = File(...)):
+    if file.size and file.size > MAX_UPLOAD_BYTES:
+        raise HTTPException(status_code=413, detail="Image too large (max 10 MB).")
     contents = await file.read()
     raw_text = analyze_schedule(contents)
 
