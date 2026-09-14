@@ -10,6 +10,7 @@
   flex-direction: column;
   align-items: center;
   gap: 16px;
+  margin-top: 0;
 }
 
 .upload-btn {
@@ -18,8 +19,6 @@
   background: #2563eb;
   color: white;
   cursor: pointer;
-  font: inherit;
-  transition: background 0.15s ease;
 }
 .upload-btn:hover {
   background: #1d4ed8;
@@ -38,6 +37,7 @@
   background: #f1f5f9;
   padding: 6px 14px;
   border-radius: 999px;
+  margin-top: 30px;
 }
 
 .submit-file {
@@ -48,7 +48,6 @@
   padding: 8px 18px;
   background: #2563eb;
   cursor: pointer;
-  transition: background 0.15s ease;
 
   button {
     background: transparent;

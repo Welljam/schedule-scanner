@@ -21,6 +21,18 @@ export class Upload {
   fileSelected = false;
   loading = false;
   fileName = '';
+  sent = signal(false);
+
+  constructor() {
+    const pending = localStorage.getItem('pendingSchedule');
+    if (pending) {
+      localStorage.removeItem('pendingSchedule');
+      this.api.create_event(JSON.parse(pending)).subscribe({
+        next: () => this.sent.set(true),
+        error: (err) => console.error(err),
+      });
+    }
+  }
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;

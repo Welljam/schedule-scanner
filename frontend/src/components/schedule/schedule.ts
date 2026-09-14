@@ -49,6 +49,7 @@ export class Schedule {
       next: () => this.sent.set(true),
       error: (err) => {
         if (err.status === 401) {
+          localStorage.setItem('pendingSchedule', JSON.stringify(createEvent));
           window.location.href = 'http://localhost:8000/login';
         } else {
           console.error(err);
